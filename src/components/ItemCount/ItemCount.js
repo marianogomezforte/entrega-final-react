@@ -1,35 +1,53 @@
 import React, { useState } from 'react';
 
 const ItemCount = ({ stock, initial, onAdd }) => {
-    const [quantity, setQuantity] = useState(initial);
+    const [count, setCount] = useState(initial);
 
-    const increment = () => {
-        if (quantity < stock) {
-        setQuantity(quantity + 1);
-        onAdd(quantity + 1);
+    const handleIncrement = () => {
+        if (count < stock) {
+            setCount(count + 1);
         }
     };
 
-    const decrement = () => {
-        if (quantity > 1) {
-        setQuantity(quantity - 1);
-        onAdd(quantity - 1);
+    const handleDecrement = () => {
+        if (count > 1) {
+            setCount(count - 1);
+        }
+    };
+
+    const handleAddToCart = () => {
+        if (count > 0) {
+            onAdd(count);
         }
     };
 
     return (
-        <div>
-        <div className="flex justify-center">
-            <button type="button" onClick={decrement} className="drop-shadow-lg bg-zinc-800 rounded-md text-2xl w-6 p-1 m-3 text-stone-100">-</button>
-            <h4 className="w-6 p-1 m-3 text-2xl">{quantity}</h4>
-            <button type="button" onClick={increment} className="drop-shadow-lg bg-zinc-800 rounded-md text-2xl w-6 p-1 m-3 text-stone-100">+</button>
-        </div>
-        <div>
-            <button onClick={() => onAdd(quantity)} disabled = {!stock} type="button" className="drop-shadow-lg bg-zinc-800 rounded-md p-3 m-3 text-stone-100">Agregar al carrito</button>
-        </div>
+        <div className="flex flex-col items-center">
+            <div className="flex justify-center items-center space-x-2">
+                <button
+                    className="bg-gray-200 rounded-md px-3 py-1 disabled:opacity-50"
+                    onClick={handleDecrement}
+                    disabled={count <= 1}
+                >
+                    -
+                </button>
+                <p className="text-xl font-semibold">{count}</p>
+                <button
+                    className="bg-gray-200 rounded-md px-3 py-1 disabled:opacity-50"
+                    onClick={handleIncrement}
+                    disabled={count >= stock}
+                >
+                    +
+                </button>
+            </div>
+            <button
+                className="drop-shadow-lg bg-zinc-800 rounded-md p-3 m-3 text-stone-100"
+                onClick={handleAddToCart}
+            >
+                Agregar al Carrito
+            </button>
         </div>
     );
 };
 
 export default ItemCount;
-
