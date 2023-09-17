@@ -2,25 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import ItemDetail from '../ItemDetail/ItemDetail';
-import db from '../../firebase'
+import db from '../../firebase';
 
 const ItemDetailContainer = () => {
     const { itemId } = useParams();
-    const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchProduct = async () => {
-        const itemRef = doc(db, 'items', itemId);
+            try {
+                const itemRef = doc(db, 'items', itemId);
+                const docSnapshot = await getDoc(itemRef);
 
-        const docSnapshot = await getDoc(itemRef);
-
-        if (docSnapshot.exists()) {
-            setProduct({ id: docSnapshot.id, ...docSnapshot.data() });
-            setLoading(false);
-        }
+                if (docSnapshot.exists()) {
+                    setLoading(false);
+                } else {
+                    console.error('El producto no existe');
+                }
+            } catch (error) {
+                console.error('Error al obtener el producto:', error);
+            }
         };
-
         fetchProduct();
     }, [itemId]);
 
@@ -30,10 +32,9 @@ const ItemDetailContainer = () => {
 
     return (
         <div className="flex flex-col bg-slate-400">
-        <ItemDetail product={product} />
+            <ItemDetail itemId={itemId} />
         </div>
     );
 };
 
 export default ItemDetailContainer;
-

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import db from '../firebase'
+import db from '../firebase';
 
 const CartContext = createContext();
 
@@ -22,34 +22,34 @@ export function CartProvider({ children }) {
 
     const checkout = async (name, phone, email) => {
         try {
-        const orderData = {
-            buyer: {
-            name,
-            phone,
-            email,
-            },
-            items: cart.map((item) => ({
-            id: item.id,
-            title: item.title,
-            price: item.price,
-            })),
-            date: Timestamp.now(),
-            total: cart.reduce((total, item) => total + item.price, 0),
-        };
+            const orderData = {
+                buyer: {
+                    name,
+                    phone,
+                    email,
+                },
+                items: cart.map((item) => ({
+                    id: item.id,
+                    title: item.title,
+                    price: item.price,
+                })),
+                date: Timestamp.now(),
+                total: cart.reduce((total, item) => total + item.price, 0),
+            };
 
-        const docRef = await addDoc(collection(db, 'orders'), orderData); 
+            const docRef = await addDoc(collection(db, 'orders'), orderData);
 
-        console.log('Order submitted with ID: ', docRef.id);
+            console.log('Order submitted with ID: ', docRef.id);
 
-        clearCart(); 
+            clearCart(); 
         } catch (error) {
-        console.error('Error submitting order: ', error);
+            console.error('Error submitting order: ', error);
         }
     };
 
     return (
         <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, checkout }}>
-        {children}
+            {children}
         </CartContext.Provider>
     );
 }

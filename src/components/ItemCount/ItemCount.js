@@ -24,6 +24,9 @@ const ItemCount = ({ stock, initial, onAdd }) => {
             <h4 className="w-6 p-1 m-3 text-2xl">{quantity}</h4>
             <button type="button" onClick={increment} className="drop-shadow-lg bg-zinc-800 rounded-md text-2xl w-6 p-1 m-3 text-stone-100">+</button>
         </div>
+        <div>
+            <button onClick={() => onAdd(quantity)} disabled = {!stock} type="button" className="drop-shadow-lg bg-zinc-800 rounded-md p-3 m-3 text-stone-100">Agregar al carrito</button>
+        </div>
         </div>
     );
 };
