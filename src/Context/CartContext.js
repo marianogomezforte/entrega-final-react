@@ -11,7 +11,6 @@ export function CartProvider({ children }) {
         const existingItem = cart.find((cartItem) => cartItem.id === item.id);
 
         if (existingItem) {
-            // Si el producto ya está en el carrito, actualiza la cantidad.
             const updatedCart = cart.map((cartItem) =>
                 cartItem.id === item.id
                     ? { ...cartItem, quantity: cartItem.quantity + quantity }
@@ -19,7 +18,6 @@ export function CartProvider({ children }) {
             );
             setCart(updatedCart);
         } else {
-            // Si el producto no está en el carrito, agrégalo.
             setCart([...cart, { ...item, quantity }]);
         }
     };
@@ -61,7 +59,7 @@ export function CartProvider({ children }) {
                     price: item.price,
                 })),
                 date: Timestamp.now(),
-                total: cart.reduce((total, item) => total + item.price * item.quantity, 0), // Actualizado para tener en cuenta la cantidad
+                total: cart.reduce((total, item) => total + item.price * item.quantity, 0), 
             };
 
             const docRef = await addDoc(collection(db, 'orders'), orderData);

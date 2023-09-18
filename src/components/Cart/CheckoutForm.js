@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { useCart } from '../../Context/CartContext';
 
-const CheckoutForm = ({ onCheckout }) => {
-    const { cart } = useCart();
+const CheckoutForm = () => {
+    const { cart, checkout } = useCart();
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onCheckout(name, phone, email);
+        if (name && phone && email) {
+            checkout(name, phone, email);
+        } else {
+            alert('Por favor, complete todos los campos.');
+        }
     };
 
     return (
