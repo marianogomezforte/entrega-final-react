@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const Cart = () => {
-    const { cart, increaseQuantity, decreaseQuantity, clearCart, checkout } = useCart();
+    const { cart, clearCart, checkout } = useCart();
     const [checkoutData, setCheckoutData] = useState({ name: '', phone: '', email: '' });
 
     const handleCheckout = (e) => {
@@ -33,47 +33,35 @@ const Cart = () => {
             <h2 className="text-2xl font-semibold mb-4">Carrito de Compras</h2>
 
             {cart.map((item) => (
-                <CartItem
-                    key={item.id}
-                    item={item}
-                    onIncrease={() => increaseQuantity(item.id)}
-                    onDecrease={() => decreaseQuantity(item.id)}
-                />
+                <CartItem key={item.id} item={item} />
             ))}
 
             <form onSubmit={handleCheckout}>
-                <input
-                    type="text"
-                    placeholder="Nombre"
-                    value={checkoutData.name}
-                    onChange={(e) => setCheckoutData({ ...checkoutData, name: e.target.value })}
-                    className="border border-gray-300 p-2 w-full"
-                />
-                <input
-                    type="text"
-                    placeholder="Teléfono"
-                    value={checkoutData.phone}
-                    onChange={(e) => setCheckoutData({ ...checkoutData, phone: e.target.value })}
-                    className="border border-gray-300 p-2 w-full"
-                />
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={checkoutData.email}
-                    onChange={(e) => setCheckoutData({ ...checkoutData, email: e.target.value })}
-                    className="border border-gray-300 p-2 w-full"
-                />
+                <div className='flex flex-col items-center'>
+                    <input
+                        type="text"
+                        placeholder="Nombre"
+                        value={checkoutData.name}
+                        onChange={(e) => setCheckoutData({ ...checkoutData, name: e.target.value })}
+                        className="border border-gray-300 p-2 w-72"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Teléfono"
+                        value={checkoutData.phone}
+                        onChange={(e) => setCheckoutData({ ...checkoutData, phone: e.target.value })}
+                        className="border border-gray-300 p-2 w-72"
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={checkoutData.email}
+                        onChange={(e) => setCheckoutData({ ...checkoutData, email: e.target.value })}
+                        className="border border-gray-300 p-2 w-72"
+                    />
+                </div>
 
-                <h4 className="text-lg font-semibold">Elementos del carrito:</h4>
-                <ul>
-                    {cart.map((item) => (
-                        <li key={item.id}>
-                            {item.title} - ${item.price} x {item.quantity}
-                        </li>
-                    ))}
-                </ul>
-
-                <p className="mt-4">TOTAL: ${getTotal()}</p>
+                <p className="text-2xl mt-4">TOTAL: ${getTotal()}</p>
                 <button
                     className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
                     onClick={clearCart}

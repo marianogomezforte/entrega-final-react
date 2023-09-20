@@ -3,16 +3,19 @@ import { useCart } from '../../Context/CartContext';
 
 const CheckoutForm = () => {
     const { cart, checkout } = useCart();
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
+    const [formData, setFormData] = useState({ name: '', phone: '', email: '' });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (name && phone && email) {
+
+        const { name, phone, email } = formData;
+
+        if (cart.length === 0) {
+            alert('El carrito está vacío. Agrega elementos antes de confirmar la compra.');
+        } else if (name && phone && email) {
             checkout(name, phone, email);
         } else {
-            alert('Por favor, complete todos los campos.');
+            alert('Por favor, completa todos los campos del formulario antes de finalizar la compra.');
         }
     };
 
@@ -23,22 +26,22 @@ const CheckoutForm = () => {
                 <input
                     type="text"
                     placeholder="Nombre"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="border border-gray-300 p-2 w-full"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className=""
                 />
                 <input
                     type="text"
                     placeholder="Teléfono"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="border border-gray-300 p-2 w-full"
                 />
                 <input
                     type="email"
                     placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="border border-gray-300 p-2 w-full"
                 />
 
@@ -63,3 +66,4 @@ const CheckoutForm = () => {
 };
 
 export default CheckoutForm;
+
