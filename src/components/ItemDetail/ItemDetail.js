@@ -56,6 +56,3 @@ const ItemDetail = ({ itemId }) => {
 };
 
 export default ItemDetail;
-
-
-
