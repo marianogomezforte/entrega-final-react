@@ -6,7 +6,6 @@ import img from './assets/shopping-cart.png';
 const CartWidget = () => {
     const { cart } = useCart();
 
-    // Calcular la cantidad total de artículos en el carrito
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
     return (

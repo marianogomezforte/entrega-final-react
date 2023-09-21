@@ -36,7 +36,7 @@ const ItemDetail = ({ itemId }) => {
     return (
         <div className="flex flex-col bg-slate-400">
             <h3 className="drop-shadow-lg text-zinc-800 rounded-md text-2xl p-1 m-3 bg-stone-100 w-96 self-center">{item?.title}</h3>
-            <img src={item?.img} alt={item?.title} className="self-center w-96 h-96 rounded-md" />
+            <img src={item?.img} alt={item?.title} className="self-center w-72 h-72 rounded-md" />
             <p>Precio: ${item?.price}</p>
             <p>{item?.description}</p>
             {showButtons ? (
